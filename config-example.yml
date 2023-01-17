@@ -1,0 +1,9 @@
+development:
+  password: 
+  theme_id: "122058080302"
+  store: orionsuperteststore.myshopify.com
+
+production:
+  password: 
+  theme_id: "122058080302"
+  store: orionsuperteststore.myshopify.com 

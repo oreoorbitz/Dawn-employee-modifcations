@@ -1,9 +1,0 @@
-development:
-  password: shptka_c05575d63082d31811341333b3576ef8
-  theme_id: "122058080302"
-  store: orionsuperteststore.myshopify.com
-
-production:
-  password: shptka_c05575d63082d31811341333b3576ef8
-  theme_id: "122058080302"
-  store: orionsuperteststore.myshopify.com
