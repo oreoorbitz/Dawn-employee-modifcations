@@ -3,6 +3,8 @@
   class="page-width section-{{ section.id }}-padding"
   data-section="{{ section.id }}"
 >
+  {{ 'glide.core.css' | asset_url | stylesheet_tag }}
+  {{ 'glide.theme.css' | asset_url | stylesheet_tag }}
   {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -11,6 +13,7 @@
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+  {{ 'cross-sell-carousel.css' | asset_url | stylesheet_tag }}
 
   {%- style -%}
     .section-{{ section.id }}-padding {
@@ -359,6 +362,102 @@
                   {{ product.description }}
                 </div>
               {%- endif -%}
+              {%- when 'carousel' -%}
+                <cross-sell-carousel>
+                   <div class="glide" data-glide>
+                     <div class="glide__track" data-glide-el="track">
+                       <ul class="glide__slides">
+                         {% for product in collections[block.settings.collection].products %}
+                           <li class="glide__slide">
+                               <div class="card card--cross-sell">
+                               <img src="{{ product.featured_image | img_url: '134x134' }}"  alt="{{ product.title }}"/>
+                               <p class="cross-sell-product-title">{{ product.title }}</p>
+                               <div {{ block.shopify_attributes }}>
+                               {%- if product != blank -%}
+                               <product-form class="product-form">
+                                 <div class="product-form__error-message-wrapper" role="alert" hidden>
+                                   <svg
+                                   aria-hidden="true"
+                                   focusable="false"
+                                   role="presentation"
+                                   class="icon icon-error"
+                                   viewBox="0 0 13 13"
+                                   >
+                                   <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+                                   <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
+                                   <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+                                   <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
+                                     </svg>
+                                     <span class="product-form__error-message"></span>
+                                     </div>
+                                     {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                                       <input
+                                       type="hidden"
+                                       name="id"
+                                       value="{{ product.selected_or_first_available_variant.id }}"
+                                       disabled
+                                       >
+                                       <div class="product-form__buttons">
+                                         <button
+                                         type="submit"
+                                         name="add"
+                                       class="product-form__submit button button--full-width {% if block.settings.show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+                                       {% if product.selected_or_first_available_variant.available == false %}
+                                       disabled
+                                     {% endif %}
+                                     >
+                                     <span>
+                                       {%- if product.selected_or_first_available_variant.available -%}
+                                       {{ 'products.product.add_to_cart' | t }}
+                                       {%- else -%}
+                                       {{ 'products.product.sold_out' | t }}
+                                     {%- endif -%}
+                                     </span>
+                                     <div class="loading-overlay__spinner hidden">
+                                       <svg
+                                       aria-hidden="true"
+                                       focusable="false"
+                                       role="presentation"
+                                       class="spinner"
+                                       viewBox="0 0 66 66"
+                                       xmlns="http://www.w3.org/2000/svg"
+                                       >
+                                       <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                                       </svg>
+                                       </div>
+                                       </button>
+                                       {%- if block.settings.show_dynamic_checkout -%}
+                                       {{ form | payment_button }}
+                                     {%- endif -%}
+                                     </div>
+                                   {%- endform -%}
+                                   </product-form>
+                                   {%- else -%}
+                                   <div class="product-form">
+                                     <div class="product-form__buttons form">
+                                       <button
+                                       type="submit"
+                                     name="add"
+                                     class="product-form__submit button button--full-width button--primary"
+                                     disabled
+                                     >
+                                     {{ 'products.product.sold_out' | t }}
+                                     </button>
+                                     </div>
+                                     </div>
+                                   {%- endif -%}
+                                   </div>
+                               </div>
+                           </li>
+                         {% endfor %}
+                       </ul>
+                     </div>
+                     <div class="glide__arrows" data-glide-el="controls">
+                        <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><</button>
+                        <button class="glide__arrow glide__arrow--right" data-glide-dir=">">></button>
+                     </div>
+                   </div>
+                 </cross-sell-carousel>
             {%- when 'custom_liquid' -%}
               {{ block.settings.custom_liquid }}
             {%- when 'collapsible_tab' -%}
@@ -1164,6 +1263,8 @@
     }
   </script>
 </section>
+<script src="{{ 'glide.js' | asset_url }}" defer></script>
+<script src="{{ 'cross-sell-carousel.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
@@ -1262,6 +1363,17 @@
       "type": "description",
       "name": "t:sections.main-product.blocks.description.name",
       "limit": 1
+    },
+    {
+      "type": "carousel",
+      "name": "Cross-Sell Carousel",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
     },
     {
       "type": "share",
