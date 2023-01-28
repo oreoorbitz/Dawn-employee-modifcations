@@ -81,3 +81,8 @@
     min-height: 45px;
   }
 }
+
+.glide__slides--cross-sell {
+  width: 80%;
+  margin-left: 10%;
+}
