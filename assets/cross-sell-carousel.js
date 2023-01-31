@@ -1,7 +1,7 @@
 class CrossSellCarousel extends HTMLElement {
   constructor() {
     super();
-    this.glideInstance = new Glide('[data-glide]', {
+    this.glideInstance = new Glide('[data-glide-cross-sell]', {
       type: 'carousel',
       startAt: 0,
       perView: 2,
@@ -19,15 +19,11 @@ class CrossSellCarousel extends HTMLElement {
         }
       }
     })
-    this.mountGlideInstance();
+    this.mountGlideInstance()
   }
   mountGlideInstance() {
     this.glideInstance.mount()
-
-    this.glideInstance.on('mount.after', function() {
-      console.log('mounted')
-    })
   }
 }
 
-customElements.define('cross-sell-carousel', CrossSellCarousel);
+customElements.define('cross-sell-carousel', CrossSellCarousel)
