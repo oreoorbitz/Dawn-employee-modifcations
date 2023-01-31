@@ -364,7 +364,7 @@
               {%- endif -%}
               {%- when 'carousel' -%}
                 <cross-sell-carousel>
-                   <div class="glide" data-glide>
+                   <div class="glide" data-glide-cross-sell>
                      <div class="glide__track glide__track--cross-sell" data-glide-el="track">
                        <ul class="glide__slides">
                          {% for product in collections[block.settings.collection].products %}
@@ -397,7 +397,7 @@
                                        value="{{ product.selected_or_first_available_variant.id }}"
                                        disabled
                                        >
-                                       <div class="product-form__buttons">
+                                       <div class="product-form__buttons cross-sell-button-container">
                                          <button
                                          type="submit"
                                          name="add"
@@ -434,7 +434,7 @@
                                    </product-form>
                                    {%- else -%}
                                    <div class="product-form">
-                                     <div class="product-form__buttons form">
+                                     <div class="product-form__buttons form cross-sell-button-container">
                                        <button
                                        type="submit"
                                      name="add"
@@ -453,8 +453,8 @@
                        </ul>
                      </div>
                      <div class="glide__arrows" data-glide-el="controls">
-                        <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><</button>
-                        <button class="glide__arrow glide__arrow--right" data-glide-dir=">">></button>
+                        <button class="glide__arrow glide__arrow--left cross-sell-arrow--left" data-glide-dir="<"><</button>
+                        <button class="glide__arrow glide__arrow--right cross-sell-arrow--right" data-glide-dir=">">></button>
                      </div>
                    </div>
                  </cross-sell-carousel>
