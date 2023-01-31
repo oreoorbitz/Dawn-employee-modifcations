@@ -22,11 +22,10 @@ class CrossSellCarousel extends HTMLElement {
     this.mountGlideInstance();
   }
   mountGlideInstance() {
-    this.glideInstance.mount()
-
     this.glideInstance.on('mount.after', function() {
       console.log('mounted')
     })
+    this.glideInstance.mount()
   }
 }
 

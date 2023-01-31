@@ -365,7 +365,7 @@
               {%- when 'carousel' -%}
                 <cross-sell-carousel>
                    <div class="glide" data-glide>
-                     <div class="glide__track" data-glide-el="track">
+                     <div class="glide__track glide__track--cross-sell" data-glide-el="track">
                        <ul class="glide__slides">
                          {% for product in collections[block.settings.collection].products %}
                            <li class="glide__slide">
@@ -401,7 +401,7 @@
                                          <button
                                          type="submit"
                                          name="add"
-                                       class="product-form__submit button button--full-width {% if block.settings.show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+                                       class="product-form__submit button button--full-width {% if block.settings.show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %} cross-sell-form-button"
                                        {% if product.selected_or_first_available_variant.available == false %}
                                        disabled
                                      {% endif %}
@@ -438,7 +438,7 @@
                                        <button
                                        type="submit"
                                      name="add"
-                                     class="product-form__submit button button--full-width button--primary"
+                                     class="product-form__submit button button--full-width button--primary cross-sell-form-button"
                                      disabled
                                      >
                                      {{ 'products.product.sold_out' | t }}
