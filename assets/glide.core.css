@@ -10,13 +10,11 @@
 
 .glide__track {
   overflow:hidden;
-  width: 80%;
-  margin-left: 10%;
 }
 
 .glide__slides {
   position:relative;
-  width:80%;
+  width:100%;
   list-style:none;
   backface-visibility:hidden;
   transform-style:preserve-3d;
