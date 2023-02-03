@@ -27,14 +27,11 @@ class CrossSellCarousel extends HTMLElement {
         }
       }
     })
-    this.mountGlideInstance();
+    this.mountGlideInstance()
   }
   mountGlideInstance() {
-    this.glideInstance.on('mount.after', function() {
-      console.log('mounted')
-    })
     this.glideInstance.mount()
   }
 }
 
-customElements.define('cross-sell-carousel', CrossSellCarousel);
+customElements.define('cross-sell-carousel', CrossSellCarousel)
