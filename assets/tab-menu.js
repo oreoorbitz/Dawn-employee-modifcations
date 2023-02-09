@@ -4,8 +4,7 @@ const tabMenuContent = document.querySelectorAll('[data-tm-content]')
 const tabMenuList = document.querySelectorAll('[data-tm-list]')
 const link = 'data-tm-link'
 const listItem = '[data-tm-list-item]'
-const underline = 'underline'
-const visible = 'visible'
+
 
 // const setSelectedTab = (element) => {
 //   const selectedId = element.id
@@ -94,8 +93,10 @@ const activateFirstPanel = (tabs, tabpanels) => {
   tabs[0].setAttribute('tabindex', '0')
   tabs[0].setAttribute('aria-selected', 'true')
   // tabs[0].closest(listItem).classList.add(underline)
-  tabpanels[0].classList.add(visible)
+  tabpanels[0].classList.add('visible')
 }
+
+activateFirstPanel(tabMenuLinkElements, tabMenuContent)
 
 // const checkInitialSelectedTab = () => {
 //   const targetedTabPanel = document
@@ -116,33 +117,36 @@ const activateFirstPanel = (tabs, tabpanels) => {
 
 const removeClassFromAll = (elements, elementClass) => {
     elements.forEach(element => {
-      contentRelatedToLink(element).classList.remove(elementClass)
+      element.classList.remove(elementClass)
     })
 }
 
-const contentRelatedToLink = (element) => {
-  const idOfPanel = `#${element.dataset.tmLink}`
-  if (element.closest('[data-tm-list]').nextElementSibling.hasAttribute('data-tm-content-container')) {
-    return element.closest('[data-tm-list]').nextElementSibling.querySelector(idOfPanel)
+const changeAttributeValue = (element, attribute, value) => element.setAttribute(attribute, value)
+const changeAttributeForAll = (elements, attribute, value) => elements.forEach(element => {
+  element.setAttribute(attribute, value)
+})
+
+const contentRelatedToLink = (linkElement) => {
+  const idOfPanel = `#${linkElement.dataset.tmLink}`
+  if (linkElement.closest('[data-tm-list]').nextElementSibling.hasAttribute('data-tm-content-container')) {
+    return linkElement.closest('[data-tm-list]').nextElementSibling.querySelector(idOfPanel)
   }
 }
 
-const addClassToParent = (elementSelector, parentElementSelector, elementClass, event) => {
-  if (event.target.hasAttribute(elementSelector)) {
-    event.target.closest(parentElementSelector).classList.add(elementClass)
-  }
-}
+const addClass = (element, classToAdd) => element.classList.add(classToAdd)
 
-const onClickOfTabLink = (elements, element, elementClass, event) => {
-    removeClassFromAll(elements, elementClass)
+const onClickOfTabLink = (linkElements, siblingElements, element, siblingElementClass, attribute, value, selected, event) => {
+    removeClassFromAll(siblingElements, siblingElementClass)
+    changeAttributeForAll(linkElements, attribute, value)
     const contentElement = contentRelatedToLink(element)
     if (event.target.hasAttribute('data-tm-link')) {
-      contentElement.classList.add('visible')
+      addClass(contentElement, siblingElementClass)
+      changeAttributeValue(event.target, attribute, selected)
     }
   }
 
 tabMenuLinkElements.forEach(link => {
-  link.addEventListener('click', () => { onClickOfTabLink(tabMenuLinkElements, link, 'visible', event) })
+  link.addEventListener('click', () => { onClickOfTabLink(tabMenuLinkElements, tabMenuContent, link, 'visible', 'aria-selected', 'false', 'true', event) })
 })
 
 
