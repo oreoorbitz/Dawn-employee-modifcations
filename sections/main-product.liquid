@@ -52,7 +52,7 @@
   {%- endif -%}
 
   <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
-    <div class="grid__item product__media-wrapper{% if section.settings.media_position == 'right' %} medium-hide large-up-hide{% endif %} testBF">
+    <div class="grid__item">
       <product-images-slider>
         <div class="product-images__carousel glide" data-glide-product-images>
           <div class="glide__track glide__track--product-images" data-glide-el="track">
@@ -60,7 +60,7 @@
               {% for image in product.images %}
                 <li class="glide__slide glide__slide--product-images">
                   <div>
-                    <img src="{{ image | image_url: width: "450x" }}" loading="lazy" alt="{{ image.alt }}" class="image--product-slider">
+              <img src="{{ image | image_url: width: "1040x" }}" {% unless forloop.first %} loading="lazy" {% endunless %} alt="{{ image.alt }}" class="image--product-slider">
                   </div>
                 </li>
               {% endfor %}
@@ -81,7 +81,7 @@
             <ul class="glide__slides glide__slides--thumbnails" data-glide-thumbnail-slides="{{ product.images | size }}">
               {% for image in product.images %}
                 <li class="glide__slide glide__slide--thumbnails" data-thumbnail-index="{{ forloop.index0 }}">
-                  <img src="{{ image | image_url: width: "120x"}}" loading="lazy" alt="{{ image.alt }}" class="image--thumbnails" data-thumbnail-image>
+                  <img src="{{ image | image_url: width: "320x"}}" loading="lazy" alt="{{ image.alt }}" class="image--thumbnails" data-thumbnail-image>
                 </li>
               {% endfor %}
             </ul>
@@ -143,86 +143,84 @@
                   {{ product.description }}
                 </div>
               {%- endif -%}
-              {%- when 'carousel' -%}
-                <cross-sell-carousel>
-                   <div class="glide" data-glide-cross-sell>
-                     <div class="glide__track glide__track--cross-sell" data-glide-el="track">
-                       <ul class="glide__slides">
-                         {% for product in collections[block.settings.collection].products %}
-                           <li class="glide__slide">
-                               <div class="card card--cross-sell">
-                               <img src="{{ product.featured_image | img_url: '134x134' }}"  alt="{{ product.title }}"/>
-                               <p class="cross-sell-product-title">{{ product.title }}</p>
-                               <div {{ block.shopify_attributes }}>
-                               {%- if product != blank -%}
-                               <product-form class="product-form">
-                                 <div class="product-form__error-message-wrapper" role="alert" hidden>
+            {%- when 'carousel' -%}
+              <cross-sell-carousel>
+                <div class="glide" data-glide-cross-sell>
+                  <div class="glide__track glide__track--cross-sell" data-glide-el="track">
+                    <ul class="glide__slides">
+                      {% for _product in collections[block.settings.collection].products %}
+                        {% unless _product.id == product.id %}
+                        <li class="glide__slide">
+                          <div class="card card--cross-sell">
+                            <img src="{{ _product.featured_image | img_url: '500x' }}"  alt="{{ _product.title }}" loading="lazy" width="{{ _product.featured_image.width }}" height="{{ _product.featured_image.height }}" class="cross-sell-img"/>
+                            <p class="cross-sell-product-title">{{ _product.title }}</p>
+                            <div {{ block.shopify_attributes }}>
+                              {%- if _product != blank -%}
+                                <product-form class="product-form">
+                                  <div class="product-form__error-message-wrapper" role="alert" hidden>
                                    {% render 'svg-product-form-error' %}
                                      <span class="product-form__error-message"></span>
-                                     </div>
-                                     {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-                                       <input
-                                       type="hidden"
-                                       name="id"
-                                       value="{{ product.selected_or_first_available_variant.id }}"
-                                       disabled
-                                       >
-                                       <div class="product-form__buttons cross-sell-button-container">
-                                         <button
-                                         type="submit"
-                                         name="add"
-                                       class="product-form__submit button button--full-width {% if block.settings.show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %} cross-sell-form-button"
-                                       class="product-form__submit button button--full-width {% if block.settings.show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %} cross-sell-form-button"
-                                       {% if product.selected_or_first_available_variant.available == false %}
-                                       disabled
-                                     {% endif %}
-                                     >
-                                     <span>
-                                       {%- if product.selected_or_first_available_variant.available -%}
-                                       {{ 'products.product.add_to_cart' | t }}
-                                       {%- else -%}
-                                       {{ 'products.product.sold_out' | t }}
-                                     {%- endif -%}
-                                     </span>
-                                     <div class="loading-overlay__spinner hidden">
-                                       {% render 'svg-loading-overlay-spinner' %}
-                                       </div>
-                                       </button>
-                                       {%- if block.settings.show_dynamic_checkout -%}
-                                       {{ form | payment_button }}
-                                     {%- endif -%}
-                                     </div>
-                                   {%- endform -%}
-                                   </product-form>
-                                   {%- else -%}
-                                   <div class="product-form">
-                                     <div class="product-form__buttons form cross-sell-button-container">
-                                       <button
-                                       type="submit"
-                                     name="add"
-                                     class="product-form__submit button button--full-width button--primary cross-sell-form-button"
-                                     class="product-form__submit button button--full-width button--primary cross-sell-form-button"
-                                     disabled
-                                     >
+                                  </div>
+                                  {%- form 'product', _product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                                    <input
+                                      type="hidden"
+                                      name="id"
+                                      value="{{ _product.selected_or_first_available_variant.id }}"
+                                      disabled
+                                    >
+                                    <div class="product-form__buttons cross-sell-button-container">
+                                      <button
+                                        type="submit"
+                                        name="add"
+                                        class="product-form__submit button button--full-width button--primary cross-sell-form-button"
+                                        class="product-form__submit button button--full-width button--primary cross-sell-form-button"
+                                        {% if _product.selected_or_first_available_variant.available == false %}
+                                        disabled
+                                        {% endif %}>
+                                        <span>
+                                          {%- if _product.selected_or_first_available_variant.available -%}
+                                            {{ 'products.product.add_to_cart' | t }}
+                                          {%- else -%}
+                                            {{ 'products.product.sold_out' | t }}
+                                          {%- endif -%}
+                                        </span>
+                                        <div class="loading-overlay__spinner hidden">
+                                          {% render 'svg-loading-overlay-spinner' %}
+                                        </div>
+                                      </button>
+                                    </div>
+                                  {%- endform -%}
+                                </product-form>
+                              {%- else -%}
+                                <div class="product-form">
+                                  <div class="product-form__buttons form cross-sell-button-container">
+                                    <button
+                                      type="submit"
+                                      name="add"
+                                      class="product-form__submit button button--full-width button--primary cross-sell-form-button"
+                                      class="product-form__submit button button--full-width button--primary cross-sell-form-button"
+                                      disabled
+                                    >
                                      {{ 'products.product.sold_out' | t }}
-                                     </button>
-                                     </div>
-                                     </div>
-                                   {%- endif -%}
-                                   </div>
-                               </div>
-                           </li>
-                         {% endfor %}
-                       </ul>
-                     </div>
-                     <div class="glide__arrows" data-glide-el="controls">
+                                    </button>
+                                  </div>
+                                </div>
+                              {%- endif -%}
+                            </div>
+                          </div>
+                        </li>
+                        {% endunless %}
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  <div class="glide__arrows" data-glide-el="controls">
                         <button class="glide__arrow glide__arrow--left cross-sell-arrow--left" data-glide-dir="<"><</button>
                         <button class="glide__arrow glide__arrow--right cross-sell-arrow--right" data-glide-dir=">">></button>
                         <button class="glide__arrow glide__arrow--left cross-sell-arrow--left" data-glide-dir="<"><</button>
                         <button class="glide__arrow glide__arrow--right cross-sell-arrow--right" data-glide-dir=">">></button>
-                     </div>
-                   </div>
-                 </cross-sell-carousel>
+                  </div>
+                </div>
+              </cross-sell-carousel>
             {%- when 'custom_liquid' -%}
               {{ block.settings.custom_liquid }}
             {%- when 'collapsible_tab' -%}
