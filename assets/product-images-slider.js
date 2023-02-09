@@ -1,6 +1,6 @@
-const thumbnailSlides = document.querySelector('[data-glide-thumbnail-slides]').dataset.glideThumbnailSlides
-const thumbnailsPerView = thumbnailSlides ? thumbnailSlides : 0
-const evenOrOddThumbnailsPerView = thumbnailsPerView % 2 === 0 ? (thumbnailsPerView / 2) - 1 : 'center'
+const numberOfThumbnailSlides = document.querySelector('[data-glide-thumbnail-slides]')?.dataset?.glideThumbnailSlides
+const numberOfThumbnailSlidesPerView = numberOfThumbnailSlides > 5 ? 5 : numberOfThumbnailSlides
+const evenOrOddThumbnailsPerView = numberOfThumbnailSlidesPerView % 2 === 0 ? (numberOfThumbnailSlidesPerView / 2) - 1 : 'center'
 
 const glideOptions = {
   image: {
@@ -15,7 +15,7 @@ const glideOptions = {
   thumbnail: {
     type: 'carousel',
     startAt: 0,
-    perView: thumbnailsPerView,
+    perView: numberOfThumbnailSlidesPerView,
     focusAt: evenOrOddThumbnailsPerView
   }
 }
@@ -24,9 +24,10 @@ const createGlideInstance = (element, optionsObject) => new Glide(element, optio
 
 const mountGlideInstance = (instance) => instance.mount()
 
-const onSlideOfProductImage = (instance, staticInstance) => {
-  instance.on(['mount.after', 'run'], () => staticInstance.go(`=${instance.index}`))
-}
+const onSlideOfProductImage = (instance, staticInstance) =>
+  instance.on(['mount.after', 'run'], () =>
+    staticInstance.go(`=${instance.index}`))
+
 
 class ProductImagesSlider extends HTMLElement {
   constructor() {
