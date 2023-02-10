@@ -8,7 +8,10 @@ html {
 }
 
 .tab-menu--link[aria-selected="true"] {
-  background-color: var(--component-bg);
+  background-color: lightgoldenrodyellow;
+  color: black;
+  font-weight: 400;
+  border-bottom: solid;
 }
 
 .tab-menu--link:focus-visible {
@@ -26,13 +29,11 @@ html {
 .tab-menu--link {
   text-decoration: none;
   color: rgba(10, 10, 10, 0.6);
-
-}
-
-.tab-menu--link[aria-selected="true"] {
-  color: black;
-  font-weight: 400;
-  border-bottom: solid;
+  /* border-top: 1px solid rgb(197, 195, 195);
+  border-left: 1px solid rgb(176, 175, 175);
+  border-right: 1px solid rgb(153, 151, 151);
+  border-radius: 4px 4px 0 0;
+  padding: 4px 5px 0 5px; */
 }
 
 .tab-menu--content:not(.visible) {
@@ -61,4 +62,3 @@ html {
 .tab-menu--content-container {
   background-color: #e7e9ed;
 }
-
