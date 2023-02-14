@@ -5,10 +5,10 @@ const tabMenuList = document.querySelector('[data-tm-list]')
 const linksArray = [...tabMenuList.querySelectorAll('[data-tm-link]')]
 const link = 'data-tm-link'
 const listItem = '[data-tm-list-item]'
-const leftArrow = 37
-const upArrow = 38
-const rightArrow = 39
-const downArrow = 40
+const leftArrow = 'ArrowLeft'
+const upArrow = 'ArrowUp'
+const rightArrow = 'ArrowRight'
+const downArrow = 'ArrowDown'
 
 const activateFirstPanel = (tabs, tabpanels) => {
   tabs[0].setAttribute('tabindex', '0')
@@ -32,20 +32,22 @@ const setSelectedTab = (element, tabs) => {
   })
 }
 
-const arrowKeyPressIs = (event, keyCodeOne, keyCodeTwo) => (event.keyCode || event.which) === keyCodeOne || (event.keyCode || event.which) === keyCodeTwo
+const arrowKeyPressIs = (keyCodeOne, keyCodeTwo, event) => (event.key || event.code) === keyCodeOne || (event.key || event.code) === keyCodeTwo
 
 const createArrowNavigation = (links) => {
-  const firstTab = links[0]
-  const lastTab = links.length - 1
   if (links.length > 1) {
+    const firstTab = links[0]
+    const lastTab = links[links.length - 1]
+
     links.forEach(link => {
       link.addEventListener('keydown', (event) => {
-        if (arrowKeyPressIs(event, leftArrow, upArrow)) {
-          const newIndexofPrevious = links.indexOf(link) - 1
-          link === firstTab ? links[lastTab].focus() : links[newIndexofPrevious].focus()
-        } else if (arrowKeyPressIs(event, rightArrow, downArrow)) {
-          const newIndexOfNext = links.indexOf(link) + 1
-          link === lastTab ? links[firstTab].focus() : links[newIndexOfNext].focus()
+        event.preventDefault()
+        if (arrowKeyPressIs(leftArrow, upArrow, event)) {
+          const indexOfPrevious = links.indexOf(link) - 1
+          link === firstTab ? links[links.length - 1].focus() : links[indexOfPrevious].focus()
+        } else if (arrowKeyPressIs(rightArrow, downArrow, event)) {
+          const indexOfNext = links.indexOf(link) + 1
+          link === lastTab ? links[0].focus() : links[indexOfNext].focus()
         } else {
           return
         }
