@@ -201,12 +201,67 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "f0e419e8-fe92-4c5e-86bb-e22026bd6dce": {
+      "type": "slideshow",
+      "blocks": {
+        "template--14488752488494__f0e419e8-fe92-4c5e-86bb-e22026bd6dce-167398278412f4b042-0": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/bitmap-copy-9_3x_951d0537-a7ee-4d48-b7b1-6b18938da241.jpg",
+            "heading": "Image slide",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "template--14488752488494__f0e419e8-fe92-4c5e-86bb-e22026bd6dce-167398278412f4b042-1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/CopinaCo_Edited-16_3000x_3343984e-09e1-43ce-b9df-476212ecaf8d.jpg",
+            "heading": "Image slide",
+            "heading_size": "h1",
+            "subheading": "Tell your brand's story through images",
+            "button_label": "Button label",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": true,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center"
+          }
+        }
+      },
+      "block_order": [
+        "template--14488752488494__f0e419e8-fe92-4c5e-86bb-e22026bd6dce-167398278412f4b042-0",
+        "template--14488752488494__f0e419e8-fe92-4c5e-86bb-e22026bd6dce-167398278412f4b042-1"
+      ],
+      "settings": {
+        "layout": "full_bleed",
+        "slide_height": "adapt_image",
+        "slider_visual": "counter",
+        "auto_rotate": false,
+        "change_slides_speed": 5,
+        "show_text_below": true,
+        "accessibility_info": "Slideshow about our brand"
+      }
     }
   },
   "order": [
     "main",
     "image-with-text",
     "multicolumn",
-    "product-recommendations"
+    "product-recommendations",
+    "f0e419e8-fe92-4c5e-86bb-e22026bd6dce"
   ]
 }
