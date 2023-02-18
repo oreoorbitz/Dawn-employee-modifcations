@@ -332,6 +332,11 @@
                 </details>
               </share-button>
               <script src="{{ 'share.js' | asset_url }}" defer="defer"></script>
+            {% when 'size_guide' %}
+              <size-guide>
+                <button href="#">{{ block.settings.button }}</button>
+              </size-guide>
+              <script src="" defer="defer"></script>
             {%- when 'variant_picker' -%}
               {%- unless product.has_only_default_variant -%}
                 {%- if block.settings.picker_type == 'button' -%}
@@ -1155,6 +1160,29 @@
         {
           "type": "paragraph",
           "content": "t:sections.main-product.blocks.share.settings.title_info.content"
+        }
+      ]
+    },
+    {
+      "type": "size_guide",
+      "name": "Size Guide",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button",
+          "label": "Button text",
+          "default": "Size Guide"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_for_womens_sizes",
+          "label": "Women's sizes"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_for_mens_sizes",
+          "label": "Men's sizes"
         }
       ]
     },
