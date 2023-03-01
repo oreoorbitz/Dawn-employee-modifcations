@@ -15,6 +15,7 @@
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
   {{ 'cross-sell-carousel.css' | asset_url | stylesheet_tag }}
   {{ 'product-images-slider.css' | asset_url | stylesheet_tag }}
+  {{ 'size-guide.css' | asset_url | stylesheet_tag }}
 
   {%- style -%}
     .section-{{ section.id }}-padding {
@@ -333,10 +334,8 @@
               </share-button>
               <script src="{{ 'share.js' | asset_url }}" defer="defer"></script>
             {% when 'size_guide' %}
-              <size-guide>
-                <button href="#">{{ block.settings.button }}</button>
-              </size-guide>
-              <script src="" defer="defer"></script>
+              {% render 'size-guide-modal' block: block %}
+              {{ 'size-guide.js' | asset_url | script_tag }}
             {%- when 'variant_picker' -%}
               {%- unless product.has_only_default_variant -%}
                 {%- if block.settings.picker_type == 'button' -%}
@@ -368,7 +367,7 @@
                     {%- endfor -%}
                     <script type="application/json">
                       {{ product.variants | json }}
-                    </script>
+                    </>
                   </variant-radios>
                 {%- else -%}
                   <variant-selects
