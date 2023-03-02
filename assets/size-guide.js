@@ -1,5 +1,4 @@
 // Constants
-const tabpanels = [...document.querySelectorAll('.tabpanel--size-guide-modal')]
 const sizeGuideModal = document.querySelector('[data-size-guide-modal]')
 const sizeGuideModalOpenButton = document.querySelector('[data-size-guide-modal-open-button]')
 const sizeGuideModalCloseButton = document.querySelector('[data-size-guide-modal-close-button]')
@@ -8,7 +7,6 @@ const focusableElements = sizeGuideModal.querySelectorAll('a[href]:not([disabled
 const focusableElementsArray = [...focusableElements]
 
 // Utility Functions
-
 const addClass = string => el => el.classList.add(string)
 const removeClass = string => el => el.classList.remove(string)
 const hide = addClass('hidden')
@@ -25,7 +23,6 @@ const bodyMakeOverflowHidden = () => {
 const bodyRemoveOverflowStyle = () => {
   document.body.style.removeProperty('overflow')
 }
-
 const modulo = (x,y) => ((y % x) + x)  % x
 const combine = (a, b) => a + b
 
@@ -45,17 +42,22 @@ const closeSizeGuideModal = () => {
 }
 
 const closeSizeGuideModalOnEsc = (event) => {
-  if (!keyPressIs('Escape', event)) return
   if ( keyPressIs('Escape', event) && !isHidden(sizeGuideModal) ) closeSizeGuideModal()
+}
+
+const closeSizeGuideModalOnEnter = (event) => {
+  if (keyPressIs('Enter', event) && event.target === sizeGuideModalCloseButton) closeSizeGuideModal()
 }
 
 const listenToKeydownForModal = () => {
   document.addEventListener('keydown', closeSizeGuideModalOnEsc)
+  document.addEventListener('keydown', closeSizeGuideModalOnEnter)
   sizeGuideModal.addEventListener('keydown', trapFocusInModal)
 }
 
 const removeKeydownEventListenersForModal = () => {
   document.removeEventListener('keydown', closeSizeGuideModalOnEsc)
+  document.removeEventListener('keydown', closeSizeGuideModalOnEnter)
   sizeGuideModal.removeEventListener('keydown', trapFocusInModal)
 }
 
@@ -70,10 +72,15 @@ const getTabDirection = event => {
 const getValidDirection = (length, desiredIndex) => modulo(length, desiredIndex)
 
 const trapFocusInModal = (event) => {
-  const length = focusableElementsArray.length
-  // change length to current index and be sure it doesn't interfere with changing focus
-  const desiredIndex = combine(length, getTabDirection(event))
-  const index = getValidDirection(length, desiredIndex)
+  event.preventDefault()
+  if (keyPressIs('Tab', event)) {
+    const length = focusableElementsArray.length
+    const activeElement = document.activeElement
+    const indexOfFocusedElement = focusableElementsArray.indexOf(activeElement)
+    const desiredIndex = combine(indexOfFocusedElement, getTabDirection(event))
+    const index = getValidDirection(length, desiredIndex)
+    focusableElementsArray[index].focus()
+  }
 }
 
 // Event Listeners
@@ -88,13 +95,3 @@ const initSizeGuide = () =>
   initSizeGuideListeners(sizeGuideModalOpenButton, sizeGuideModalCloseButton, overlayForOpenSizeGuideModal)
 
 initSizeGuide()
-
-
-
-class SizeGuide extends HTMLElement {
-  constructor() {
-    super();
-  }
-}
-
-customElements.define('size-guide', SizeGuide)
