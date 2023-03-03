@@ -1,0 +1,13 @@
+.main-container--icons-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.icon-container--icons-section {
+  grid-column: span 2;
+  justify-self: center;
+  padding: 20px 0;
+  text-align: center;
+  width: 33vw;
+}
