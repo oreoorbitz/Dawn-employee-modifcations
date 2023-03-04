@@ -1,0 +1,67 @@
+{{ 'video-player.css' | asset_url | stylesheet_tag }}
+
+<div class="main-container--video-player">
+  {{ section.settings.heading }}
+  <div class="video-container--video-player">
+    <iframe src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?background=1" allow="autoplay; encrypted-media" allowfullscreen title="{{ section.settings.description | escape }}" data-video-player frameborder="0"></iframe>
+    <button data-video-play>play</button>
+    <button data-video-pause>pause</button>
+  </div>
+</div>
+
+<script src="{{ 'video-player.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+  {
+    "name": "video-player",
+    "tag": "section",
+    "class": "video-player-section",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading",
+        "default": "Video",
+        "label": "Video heading"
+      },
+      {
+        "type": "select",
+        "id": "heading_size",
+        "options": [
+          {
+            "value": "h2",
+            "label": "Large"
+          },
+          {
+            "value": "h1",
+            "label": "Largest"
+          }
+        ],
+        "default": "h1",
+        "label": "Largest"
+      },
+      {
+        "type": "image_picker",
+        "id": "cover_image",
+        "label": "Image to display before video starts"
+      },
+      {
+        "type": "video_url",
+        "id": "video_url",
+        "accept": [
+          "vimeo"
+        ],
+        "label": "Video URL"
+      },
+      {
+        "type": "text",
+        "id": "description",
+        "label": "Video description"
+      }
+    ],
+    "presets": [
+      {
+        "name": "video-player"
+      }
+    ]
+  }
+  {% endschema %}
