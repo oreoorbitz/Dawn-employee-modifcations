@@ -1,4 +1,27 @@
-@media (min-width: 751), (max-width: 2000px) {
+.glide__track--cross-sell {
+  width: 80%;
+  margin: auto;
+}
+
+.cross-sell-product-title {
+  display: block;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 3.6em;
+  line-height: 1.8em;
+  padding: 0 15px;
+}
+
+.cross-sell-arrow--left {
+  left: -0.3em;
+}
+
+.cross-sell-arrow--right {
+  right: -0.3em;
+}
+
+@media (min-width: 750) {
 
   .cross-sell-product-title {
     display: block;
@@ -20,56 +43,7 @@
   }
 }
 
-@media (max-width: 750px) {
-
-  .cross-sell-product-title {
-    height: 60px;
-  }
-
-  .cross-sell-arrow--left {
-    left: 1em;
-  }
-
-  .cross-sell-arrow--right {
-    right: 1em;
-  }
+.cross-sell-img {
+  width: 100%;
+  height: auto;
 }
-
-@media (max-width: 450px) {
-
-  .cross-sell-product-title {
-    display: block;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-    overflow: hidden;
-    max-height: 3.6em;
-    line-height: 1.8em;
-    padding: 0 10px;
-  }
-
-  .cross-sell-arrow--left {
-    left: -0.3em;
-  }
-
-  .cross-sell-arrow--right {
-    right: -0.3em;
-  }
-}
-
-@media (min-width: 750), (max-width: 850px) {
-
-  .cross-sell-form-button {
-    min-width: 110px;
-    min-height: 45px;
-  }
-}
-
-@media (min-width: 990), (max-width: 1100px) {
-
-  .cross-sell-form-button {
-    min-width: 110px;
-    min-height: 45px;
-  }
-}
-
-
