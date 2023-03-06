@@ -51,8 +51,7 @@
     "slider": {
       "of": "из",
       "next_slide": "Листать вперед",
-      "previous_slide": "Листать назад",
-      "name": "Ползунок"
+      "previous_slide": "Листать назад"
     }
   },
   "newsletter": {
@@ -75,8 +74,7 @@
     "skip_to_product_info": "Перейти к информации о продукте",
     "total_reviews": "всего отзывов",
     "star_reviews_info": "{{ rating_value }} из {{ rating_max }} звезд",
-    "collapsible_content_title": "Контент, который можно свернуть",
-    "complementary_products": "Дополнительные товары"
+    "collapsible_content_title": "Контент, который можно свернуть"
   },
   "blogs": {
     "article": {
@@ -283,7 +281,8 @@
     },
     "featured_collection": {
       "view_all": "Посмотреть все",
-      "view_all_label": "Посмотреть все продукты в коллекции \"{{ collection_name }}\""
+      "view_all_label": "Посмотреть все продукты в коллекции \"{{ collection_name }}\"",
+      "slider": "Ползунок"
     },
     "collection_list": {
       "view_all": "Посмотреть все"
@@ -393,7 +392,7 @@
     },
     "reset_password": {
       "title": "Сбросьте пароль учетной записи",
-      "subtext": "Введите новый пароль",
+      "subtext": "Введите новый пароль для {{ email }}",
       "password": "Пароль",
       "password_confirm": "Подтвердить пароль",
       "submit": "Сбросить пароль"
