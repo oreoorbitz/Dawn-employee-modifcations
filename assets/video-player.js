@@ -1,17 +1,15 @@
 const backgroundVideo = document.querySelector('[data-video-player]')
-backgroundVideoPauseButton = document.querySelector('[data-video-pause]')
-backgroundVideoPlayButton = document.querySelector('[data-video-play]')
+const backgroundVideoPlayOrPauseButton = document.querySelector('[data-video-pause-or-play]')
 
-const pauseVideo = () => {
-  const data = { method: 'pause' }
-  backgroundVideo.contentWindow.postMessage(JSON.stringify(data), '*')
+const togglePaused = () => backgroundVideo.classList.toggle('paused')
+
+const postMessageToVideo = (video, action) => video.contentWindow.postMessage(JSON.stringify(action), '*')
+
+const pauseOrPlayVideo = (video) => {
+  const dataPause = { method: 'pause' }
+  const dataPlay = { method: 'play' }
+  video.classList.contains('paused') ? postMessageToVideo(video, dataPlay) : postMessageToVideo(video, dataPause)
 }
 
-const playVideo = () => {
-  const data = { method: 'play' }
-  backgroundVideo.contentWindow.postMessage(JSON.stringify(data), '*')
-}
-
-
-backgroundVideoPauseButton.addEventListener('click', pauseVideo)
-backgroundVideoPlayButton.addEventListener('click', playVideo)
+backgroundVideoPlayOrPauseButton.addEventListener('click', () => { pauseOrPlayVideo(backgroundVideo) })
+backgroundVideoPlayOrPauseButton.addEventListener('click', togglePaused)

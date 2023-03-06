@@ -4,8 +4,7 @@
   {{ section.settings.heading }}
   <div class="video-container--video-player">
     <iframe src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?background=1" allow="autoplay; encrypted-media" allowfullscreen title="{{ section.settings.description | escape }}" data-video-player frameborder="0"></iframe>
-    <button data-video-play>play</button>
-    <button data-video-pause>pause</button>
+    <button data-video-pause-or-play class="play-or-pause-button--video-player">{% render 'icon-pause' %}{% render 'icon-play' %}</button>
   </div>
 </div>
 
