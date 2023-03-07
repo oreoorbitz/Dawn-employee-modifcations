@@ -1,0 +1,18 @@
+.main-container--icons-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.icon-container--icons-section {
+  justify-self: center;
+  padding: 20px 0;
+  text-align: center;
+  width: 50vw;
+}
+
+@media screen and (min-width: 768px) {
+  .icon-container--icons-section {
+    width: 33vw;
+  }
+}
