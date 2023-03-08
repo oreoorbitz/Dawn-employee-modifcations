@@ -1,0 +1,14 @@
+.main-container--mini-cart {
+  background-color: #C9DCB3;
+  position: absolute;
+  top: 55px;
+  right: 10px;
+  padding: 10px;
+}
+
+.btn-close--mini-cart {
+  width: 20px;
+  aspect-ratio: 1/1;
+  border-radius: 5px;
+  padding: 2px;
+}

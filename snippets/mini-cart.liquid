@@ -1,0 +1,7 @@
+{{ 'mini-cart.css' | asset_url | stylesheet_tag }}
+
+<div class="main-container--mini-cart">
+  <button class="btn-close--mini-cart">x</button>
+  MINI CART 🛒
+  <a href="{{ routes.cart_url }}" class="btn-checkout--mini-cart">Checkout</a>
+</div>

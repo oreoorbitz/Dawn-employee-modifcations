@@ -2238,7 +2238,7 @@ product-info .loading-overlay:not(.hidden) ~ *,
 }
 
 /* section-header */
-.section-header.shopify-section-group-header-group {
+#shopify-section-header {
   z-index: 3;
 }
 
@@ -2272,6 +2272,7 @@ product-info .loading-overlay:not(.hidden) ~ *,
   display: block;
   position: relative;
   background-color: rgb(var(--color-background));
+  z-index: 1;
 }
 
 .header-wrapper--border-bottom {
