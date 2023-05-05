@@ -637,7 +637,7 @@
         </a>
       {%- endif -%}
 
-      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset testBF" id="cart-icon-bubble">
+    <a href="#" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble" data-mc-open-btn="{{ request.page_type }}">
         {%- liquid
           if cart == empty
             render 'icon-cart-empty'
@@ -655,7 +655,6 @@
           </div>
         {%- endif -%}
       </a>
-      {% render 'mini-cart' routes: routes %}
     </div>
   </header>
 </{% if section.settings.sticky_header_type != 'none' %}sticky-header{% else %}div{% endif %}>

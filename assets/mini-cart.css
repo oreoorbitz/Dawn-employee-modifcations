@@ -1,14 +1,225 @@
+:root {
+  --background:#e3f0d4;
+  --background2: #ffffff;
+  --button-background: #E1E6E1;
+  --button-accent: #54585d;
+  --quantity-border: 1.5px solid var(--button-accent);
+}
+
+body.open--mini-cart {
+  height: 100vh;
+  overflow-y: hidden;
+}
+
 .main-container--mini-cart {
-  background-color: #C9DCB3;
+  background-color: var(--background);
   position: absolute;
-  top: 55px;
-  right: 10px;
+  top: 0;
+  right: 0;
   padding: 10px;
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.3s;
+  min-height: 100vh;
+  min-width: 60vw;
+  overflow-y: scroll;
+  z-index: 3;
+}
+
+.flex-container--mini-cart {
+  display: flex;
+  flex-direction: column;
+}
+
+.closed--mini-cart {
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.items--mini-cart {
+  padding: 10px 15px 0 15px;
+  min-width: 50vw;
+  max-height: 50vh;
+  overflow-y: scroll;
+  background-color: var(--background2);
+}
+
+.btn--mini-cart {
+  background: var(--button-background);
+  color: var(--button-accent);
+  border: 1.5px solid var(--button-accent);
+}
+
+.btn-large--mini-cart {
+  width: 30%;
+  border-radius: 5px;
+}
+
+.btn--mini-cart:hover {
+  background: var(--button-accent);
+  color: var(--button-background);
+}
+
+.btn--mini-cart:disabled {
+  background: var(--button-background);
+  color: var(--button-accent);
+}
+
+.btn--mini-cart:disabled:hover {
+  background: rgb(231, 120, 120);
+  color: var(--button-background);
+}
+
+.empty-cart--mini-cart {
+  text-align: center;
+}
+
+.header--mini-cart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .btn-close--mini-cart {
-  width: 20px;
+  width: 25px;
   aspect-ratio: 1/1;
-  border-radius: 5px;
+  border-radius: 50%;
   padding: 2px;
+}
+
+.product-title-link--mini-cart {
+  text-decoration: none;
+  color: var(--button-accent);
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.product-title-link--mini-cart:hover {
+  opacity: 0.8;
+  border-bottom: 1px solid var(--button-accent);
+}
+
+.image-and-variants--mini-cart {
+  display: flex;
+}
+
+.line-item-details--mini-cart {
+  margin: 0 10px;
+}
+
+.product-options--mini-cart {
+  display: flex;
+}
+
+.product-option-name--mini-cart {
+  margin: 0 5px 0 0;
+}
+
+.product-option-value--mini-cart {
+  margin: 0;
+}
+
+.item-info--mini-cart {
+  border: 1px solid rgb(116, 136, 80);
+  padding: 3px;
+}
+
+.discounts-list--mini-cart {
+  list-style-type: none;
+}
+
+.price-and-quantity--mini-cart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.quantity-controls--mini-cart {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.remove-link-container--mini-cart {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}
+
+.remove-link--mini-cart > svg {
+  pointer-events: none;
+}
+
+.item-quantity-input--mini-cart {
+  width: 30px;
+  text-align: center;
+  border: none;
+  border-top: var(--quantity-border);
+  border-bottom: var(--quantity-border);
+  margin: 0 -4px;
+}
+
+.item-quantity-input--mini-cart::-webkit-inner-spin-button, .item-quantity-input--mini-cart::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+} 
+
+.item-quantity-input--mini-cart[type=number] {
+  -moz-appearance: textfield;
+}
+
+.btn-quantity--mini-cart {
+  border: none;
+  border-top: var(--quantity-border);
+  border-bottom: var(--quantity-border);
+  width: 25px;
+  margin: 0;
+}
+
+.btn-increase--mini-cart {
+  border-left: var(--quantity-border);
+  border-radius: 5px 0 0 5px;
+}
+
+.btn-decrease--mini-cart {
+  border-right: var(--quantity-border);
+  border-radius: 0 5px 5px 0;
+}
+
+.line-item-total--mini-cart {
+  display: flex;
+}
+
+.end-of-item--mini-cart {
+  color: var(--background);
+  width: 100%;
+  height: 1px;
+  margin-block-start: 4vh;
+  margin-block-end: 4vh;
+}
+
+.checkout-btns--mini-cart {
+  position: sticky;
+  bottom: -11px;
+  width: 339px;
+  height: 50px;
+  background-color: var(--background);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0 12px 0;
+  margin: 0 -15px;
+  margin-bottom: 0;
+}
+
+.footer--mini-cart {
+  margin-top: 10px;
+}
+
+@media (min-width: 768px) {
+  .main-container--mini-cart {
+    min-width: 40vw;
+  }
 }
