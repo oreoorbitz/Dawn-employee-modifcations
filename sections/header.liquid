@@ -637,7 +637,7 @@
         </a>
       {%- endif -%}
 
-    <a href="#" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble" data-mc-open-btn="{{ request.page_type }}">
+    <a href="#" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble" data-mini-cart-open-btn="{{ request.page_type }}">
         {%- liquid
           if cart == empty
             render 'icon-cart-empty'
