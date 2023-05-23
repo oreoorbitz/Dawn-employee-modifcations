@@ -1,13 +1,13 @@
 {{ 'mini-cart.css' | asset_url | stylesheet_tag }}
 
-<div class="main-container--mini-cart closed--mini-cart" id="mini-cart" data-mc-main-container="{{ section.id }}">
+<div class="main-container--mini-cart closed--mini-cart" id="mini-cart" data-mini-cart-main-container="{{ section.id }}">
   <div class="flex-container--mini-cart">
     <section class="header--mini-cart">
       {{ 'sections.cart.title' | t }}
-      <button data-mc-close-btn class="btn-close--mini-cart btn--mini-cart">x</button>
+      <button data-mini-cart-close-btn class="btn-close--mini-cart btn--mini-cart">x</button>
     </section>
-    <div class="event-delegate-container--mini-cart" data-mc-event>
-      <div class="content-to-update--mini-cart" data-mc-updates>
+    <div class="event-delegate-container--mini-cart" data-mini-cart-event>
+      <div class="content-to-update--mini-cart" data-mini-cart-updates>
         {% if cart == empty %}
           <section class="empty-cart-section--mini-cart">
             <div class="empty-cart--mini-cart">Your cart is empty</div>
@@ -20,14 +20,14 @@
           {%- endif -%}
         {% else %}
           <h2>Items</h2>
-          <section class="items--mini-cart"><section id="items--mini-cart" class="items--mini-cart" data-mc-items-container="0">
+          <section class="items--mini-cart"><section id="items--mini-cart" class="items--mini-cart" data-mini-cart-items-container="0">
             <form action="{{ routes.cart_url }}" method="post">
               {% for line_item in cart.items %}
-                <div class="line-item--mini-cart" data-mc-key="{{ line_item.key }}">
+                <div class="line-item--mini-cart" data-mini-cart-key="{{ line_item.key }}">
                   <a
                     href="{{ line_item.url }}"
                     class="product-title-link--mini-cart"
-                    data-mc-line-item-key="{{ line_item.key }}">{{ line_item.product.title | escape }}</a>
+                    data-mini-cart-line-item-key="{{ line_item.key }}">{{ line_item.product.title | escape }}</a>
                   <div class='image-and-variants--mini-cart'>
                     {% if line_item.image %}
                       <img
@@ -47,7 +47,7 @@
                           {% endfor %}
                         </div>
                       {% endif %}
-                      <div class="line-item-price--mini-cart" data-mc-line-price>
+                      <div class="line-item-price--mini-cart" data-mini-cart-line-price>
                         {% if line_item.original_price > line_item.final_price %}
                           <s>{{ line_item.original_price | money_without_trailing_zeros }}</s>
                         {% endif %}
@@ -72,7 +72,7 @@
                   <div class="line-price-and-quantity--mini-cart">
                     <div class="quantity-controls--mini-cart">
                       <div class="quantity-controls-main--mini-cart">
-                        <button class="btn-quantity--mini-cart btn-increase--mini-cart btn--mini-cart" data-mc-quantity-btn="plus" type="button">+</button>
+                        <button class="btn-quantity--mini-cart btn-increase--mini-cart btn--mini-cart" data-mini-cart-quantity-btn="plus" type="button">+</button>
                         <input
                           type="number"
                           name="updates[]"
@@ -81,11 +81,11 @@
                           step="1"
                           min="1"
                           max="{{ line_item.variant.inventory_quantity }}"
-                          data-mc-item-quantity>
-                        <button class="btn-quantity--mini-cart btn-decrease--mini-cart btn--mini-cart" data-mc-quantity-btn="minus" type="button">-</button>
+                          data-mini-cart-item-quantity>
+                        <button class="btn-quantity--mini-cart btn-decrease--mini-cart btn--mini-cart" data-mini-cart-quantity-btn="minus" type="button">-</button>
                       </div>
                       <div class="remove-link-container--mini-cart">
-                        <a href="#" data-mc-remove-link class="remove-link--mini-cart">{% render 'icon-remove' %}</a>
+                        <a href="#" data-mini-cart-remove-link class="remove-link--mini-cart">{% render 'icon-remove' %}</a>
                       </div>
                     </div>
                     <div class="line-item-total--mini-cart">
@@ -103,7 +103,7 @@
                   </div>
                 </div>
               {% endfor %}
-              <div class="checkout-btns--mini-cart" data-mc-checkout-btns>
+              <div class="checkout-btns--mini-cart" data-mini-cart-checkout-btns>
                 <input 
                   type="submit"
                   class="btn--mini-cart btn-large--mini-cart"

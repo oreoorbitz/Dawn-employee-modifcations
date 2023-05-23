@@ -497,7 +497,7 @@
                       <button
                         type="submit"
                         name="add"
-                        data-mc-add="{{ product.selected_or_first_available_variant.id }}"
+                        data-mini-cart-add="{{ product.selected_or_first_available_variant.id }}"
                         class="product-form__submit button button--full-width {% if block.settings.show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
                         {% if product.selected_or_first_available_variant.available == false %}
                           disabled
