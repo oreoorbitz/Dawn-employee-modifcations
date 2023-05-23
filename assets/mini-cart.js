@@ -1,19 +1,19 @@
 // constants
-const closeButtonMiniCart = document.querySelector('[data-mini-cart-close-btn]')
-const openButtonMiniCart = document.querySelector('[data-mini-cart-open-btn]')
-const addButtonMiniCart = document.querySelector('[data-mini-cart-add]')
-const miniCart = document.querySelector('[data-mini-cart-main-container]')
-const itemsContainerMiniCart = document.querySelector('[data-mini-cart-items-container]')
-const checkoutButtonsMiniCart = document.querySelector('[data-mini-cart-checkout-btns]')
-const deleteButtonMiniCart = document.querySelector('[data-mini-cart-remove-link]')
-const miniCartWrapper = document.querySelector('[data-mini-cart-event]')
+const closeButtonMiniCart = document.querySelector('[data-mc-close-btn]')
+const openButtonMiniCart = document.querySelector('[data-mc-open-btn]')
+const addButtonMiniCart = document.querySelector('[data-mc-add]')
+const miniCart = document.querySelector('[data-mc-main-container]')
+const itemsContainerMiniCart = document.querySelector('[data-mc-items-container]')
+const checkoutButtonsMiniCart = document.querySelector('[data-mc-checkout-btns]')
+const deleteButtonMiniCart = document.querySelector('[data-mc-remove-link]')
+const eventDelegateMiniCart = document.querySelector('[data-mc-event]')
 const bodyBehindMiniCart = document.body
 const MINI_CART_OPEN_CLASS = 'open--mini-cart'
 const MINI_CART_CLOSED_CLASS = 'closed--mini-cart'
 
-const quantityButtonsMiniCart = () => Array.from(document.querySelectorAll('[data-mini-cart-quantity-btn]'))
-const itemCountElementsMiniCart = () => Array.from(document.querySelectorAll('[data-mini-cart-item-quantity]'))
-const itemsInMiniCart = () => Array.from(document.querySelectorAll('[data-mini-cart-key]'))
+const quantityButtonsMiniCart = () => Array.from(document.querySelectorAll('[data-mc-quantity-btn]'))
+const itemCountElementsMiniCart = () => Array.from(document.querySelectorAll('[data-mc-item-quantity]'))
+const itemsInMiniCart = () => Array.from(document.querySelectorAll('[data-mc-key]'))
 
 // utility functions
 const addClass = (element, className) => element.classList.add(className)
@@ -26,8 +26,8 @@ const findSiblingFromParent = (element, selector) => element.parentElement.query
 
 const disableQuantityButton = (buttons) => {
   buttons.forEach(button => {
-    const input = findSiblingFromParent(button, '[data-mini-cart-item-quantity]')
-    if (input.value === '1' && button.dataset.miniCartQuantityBtn === 'minus' || input.value === input.max && button.dataset.miniCartQuantityBtn === 'plus') {
+    const input = findSiblingFromParent(button, '[data-mc-item-quantity]')
+    if (input.value === '1' && button.dataset.mcQuantityBtn === 'minus' || input.value === input.max && button.dataset.mcQuantityBtn === 'plus') {
       button.disabled = true
     }
   })
@@ -43,6 +43,8 @@ const addToMiniCart = async (key, quantity) => {
     'quantity': quantity,
     'sections': sectionsToUpdateMiniCart().map((section) => section.section)
   })
+
+  console.log(formData)
 
   let response = await fetch(`${window.Shopify.routes.root}cart/add.js`, {
     method: 'POST',
@@ -64,7 +66,7 @@ const addToMiniCart = async (key, quantity) => {
 
 // update the cart
 const changeItemQuantity = async (key, quantity) => {
-  const scrollPosition = document.querySelector('[data-mini-cart-items-container]').dataset.miniCartItemsContainer
+  const scrollPosition = document.querySelector('[data-mc-items-container]').dataset.mcItemsContainer
   let formData = JSON.stringify({
     'id': key,
     'quantity': quantity,
@@ -82,11 +84,11 @@ const changeItemQuantity = async (key, quantity) => {
     const data = await response.text()
     const jsonForHTMLCreation = JSON.parse(data)
     updateSections(sectionsToUpdateMiniCart(), jsonForHTMLCreation)
-    const scrollItems = document.querySelector('[data-mini-cart-items-container]')
+    const scrollItems = document.querySelector('[data-mc-items-container]')
     if (scrollItems) {
       scrollItems.scrollTo(0, scrollPosition)
       scrollItems.addEventListener('scroll', () => {
-        scrollItems.dataset.miniCartItemsContainer = scrollItems.scrollTop
+        scrollItems.dataset.mcItemsContainer = scrollItems.scrollTop
       })
     }
     disableQuantityButton(quantityButtonsMiniCart())
@@ -99,7 +101,7 @@ const sectionsToUpdateMiniCart = () =>
   [
     {
       id: 'mini-cart',
-      section: miniCart.dataset.miniCartMainContainer,
+      section: miniCart.dataset.mcMainContainer,
       selector: '.content-to-update--mini-cart'
     },
     {
@@ -119,8 +121,8 @@ const updateSections = (sections, returnedJSON) => {
   sections.forEach((section) => {
     const sectionElement = document.getElementById(section.id).querySelector(section.selector)
     const sectionElementOrBackup = sectionElement || document.getElementById(section.id)
-    const htmlToInjectInMiniCart = getSectionInnerHtmlMiniCart(returnedJSON.sections[section.section], section.selector)
-    sectionElementOrBackup.innerHTML = htmlToInjectInMiniCart
+    const htmlToInjectInMC = getSectionInnerHtmlMiniCart(returnedJSON.sections[section.section], section.selector)
+    sectionElementOrBackup.innerHTML = htmlToInjectInMC
   });
 }
 
@@ -131,36 +133,37 @@ const handleCloseMiniCart = () => {
 }
 
 const handleOpenMiniCart = () => {
-  if (openButtonMiniCart.dataset.miniCartOpenBtn === 'cart') return
+  if (openButtonMiniCart.dataset.mcOpenBtn === 'cart') return
   showHiddenElement(miniCart, MINI_CART_CLOSED_CLASS)
   preventScroll(bodyBehindMiniCart, MINI_CART_OPEN_CLASS)
   miniCart.focus()
 }
 
 const handleAddToMiniCart = (event) => {
-  const key = event.target.closest('[data-mini-cart-product-page-quantity]')
-  console.log(key)
-  
+  const key = event.target.closest('[data-mc-add]').dataset.mcAdd
   const quantity = 1
   addToMiniCart(key, quantity)
 }
 
 const handleChangeItemCount = (event) => {
-  if (event.target.parentElement === checkoutButtonsMiniCart || event.target.parentElement === deleteButtonMiniCart) return
-  const key = event.target.closest('[data-mini-cart-key]').dataset.miniCartKey
-  const currentCountElement = findSiblingFromParent(event.target, '[data-mini-cart-item-quantity]')
+  if (event.target.parentElement === checkoutButtonsMiniCart || event.target.parentElement === deleteButtonMiniCart) console.log('checkout btn pressed')
+  const key = event.target.closest('[data-mc-key]').dataset.mcKey
+  const currentCountElement = findSiblingFromParent(event.target, '[data-mc-item-quantity]')
   if (quantityButtonsMiniCart().includes(event.target) && itemCountElementsMiniCart().includes(currentCountElement)) {
     event.preventDefault()
     if (event.target.innerText === '+' && currentCountElement.value < currentCountElement.max) {
+      console.log('plus')
       currentCountElement.stepUp()
       const quantity = parseInt(currentCountElement.value)
       changeItemQuantity(key, quantity)
     } else if (event.target.innerText === '-' && currentCountElement.value > currentCountElement.min) {
+      console.log('minus')
       currentCountElement.stepDown()
       const quantity = parseInt(currentCountElement.value)
       changeItemQuantity(key, quantity)
     } 
-  } else if (event.target === document.querySelector('[data-mini-cart-remove-link]')) {
+  } else if (event.target === document.querySelector('[data-mc-remove-link]')) {
+    console.log('delete')
     changeItemQuantity(key, 0)
   }
 }
@@ -169,7 +172,7 @@ const handleChangeItemCount = (event) => {
 closeButtonMiniCart.addEventListener('click', handleCloseMiniCart)
 openButtonMiniCart.addEventListener('click', handleOpenMiniCart)
 addButtonMiniCart.addEventListener('click', handleAddToMiniCart)
-miniCartWrapper.addEventListener('click', handleChangeItemCount)
+eventDelegateMiniCart.addEventListener('click', handleChangeItemCount)
 itemsInMiniCart().length > 0 && itemsContainerMiniCart.addEventListener('scroll', () => {
-  itemsContainerMiniCart.dataset.miniCartItemsContainer = itemsContainerMiniCart.scrollTop
+  itemsContainerMiniCart.dataset.mcItemsContainer = itemsContainerMiniCart.scrollTop
 })
