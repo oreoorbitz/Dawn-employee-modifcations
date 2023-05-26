@@ -37,8 +37,10 @@ class CartNotification extends HTMLElement {
           this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
       }));
 
+      /*
       if (this.header) this.header.reveal();
       this.open();
+      */
   }
 
   getSectionsToRender() {

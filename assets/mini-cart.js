@@ -1,13 +1,14 @@
 // constants
+const miniCart = document.querySelector('[data-mini-cart-main-container]')
 const closeButtonMiniCart = document.querySelector('[data-mini-cart-close-btn]')
 const openButtonMiniCart = document.querySelector('[data-mini-cart-open-btn]')
-const addButtonMiniCart = document.querySelector('[data-mini-cart-add]')
-const miniCart = document.querySelector('[data-mini-cart-main-container]')
+const addToCartButton = document.querySelector('[data-mini-cart-add]')
 const itemsContainerMiniCart = document.querySelector('[data-mini-cart-items-container]')
 const checkoutButtonsMiniCart = document.querySelector('[data-mini-cart-checkout-btns]')
 const deleteButtonMiniCart = document.querySelector('[data-mini-cart-remove-link]')
 const miniCartWrapper = document.querySelector('[data-mini-cart-event]')
 const bodyBehindMiniCart = document.body
+const overlayForBodyBehindMiniCart = document.querySelector('[data-mini-cart-overlay]')
 const MINI_CART_OPEN_CLASS = 'open--mini-cart'
 const MINI_CART_CLOSED_CLASS = 'closed--mini-cart'
 
@@ -128,12 +129,14 @@ const updateSections = (sections, returnedJSON) => {
 const handleCloseMiniCart = () => {
   hideElement(miniCart, MINI_CART_CLOSED_CLASS)
   allowScroll(bodyBehindMiniCart, MINI_CART_OPEN_CLASS)
+  addClass(overlayForBodyBehindMiniCart, 'hidden')
 }
 
 const handleOpenMiniCart = () => {
   if (openButtonMiniCart.dataset.miniCartOpenBtn === 'cart') return
   showHiddenElement(miniCart, MINI_CART_CLOSED_CLASS)
   preventScroll(bodyBehindMiniCart, MINI_CART_OPEN_CLASS)
+  removeClass(overlayForBodyBehindMiniCart, 'hidden')
   miniCart.focus()
 }
 
@@ -141,6 +144,8 @@ const handleAddToMiniCart = (event) => {
   const key = event.target.closest('[data-mini-cart-add]').dataset.miniCartAdd
   const quantity = 1
   addToMiniCart(key, quantity)
+  window.scrollTo(0, 0)
+  handleOpenMiniCart()
 }
 
 const handleChangeItemCount = (event) => {
@@ -150,6 +155,7 @@ const handleChangeItemCount = (event) => {
   if (quantityButtonsMiniCart().includes(event.target) && itemCountElementsMiniCart().includes(currentCountElement)) {
     event.preventDefault()
     if (event.target.innerText === '+' && currentCountElement.value < currentCountElement.max) {
+      console.log('plus pressed')
       currentCountElement.stepUp()
       const quantity = parseInt(currentCountElement.value)
       changeItemQuantity(key, quantity)
@@ -166,7 +172,7 @@ const handleChangeItemCount = (event) => {
 // add event listeners 
 closeButtonMiniCart.addEventListener('click', handleCloseMiniCart)
 openButtonMiniCart.addEventListener('click', handleOpenMiniCart)
-addButtonMiniCart.addEventListener('click', handleAddToMiniCart)
+addToCartButton.addEventListener('click', handleAddToMiniCart)
 miniCartWrapper.addEventListener('click', handleChangeItemCount)
 itemsInMiniCart().length > 0 && itemsContainerMiniCart.addEventListener('scroll', () => {
   itemsContainerMiniCart.dataset.miniCartItemsContainer = itemsContainerMiniCart.scrollTop
